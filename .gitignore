@@ -1,0 +1,20 @@
+# Temporary/editor files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Nix build outputs
+result
+result-*
+
+# Backup files
+*.backup
+*.bak
+*.save
+
+# Secrets
+.env
+.env.*
+secrets/
+*.secret
