@@ -110,6 +110,7 @@
     tumbler
     imv
     helix
+    cmatrix
     starship
     hyprshot
   ];

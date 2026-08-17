@@ -8,13 +8,14 @@
     enable = true;
     shellAliases = {
       btw = "echo i use NixOS btw";
+      mommy = "echo hello good boy";
     };
   };
   programs.starship = {
    enable = true;
 
    settings = {
-      format = " $directory$character";
+      format = "  $directory$character";
 
    directory = {
       style = "bold #b66aff";
