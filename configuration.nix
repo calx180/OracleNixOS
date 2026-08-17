@@ -109,6 +109,9 @@
     xfconf
     tumbler
     imv
+    helix
+    starship
+    hyprshot
   ];
   
   fonts.packages = with pkgs; [
