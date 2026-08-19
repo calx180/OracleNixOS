@@ -12,11 +12,10 @@
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use latest kernel.
+ 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "Oracle"; # Define your hostname.
+  networking.hostName = "Oracle";
 
   networking.networkmanager.enable = true;
 
@@ -35,7 +34,6 @@
         "context.properties" = {
         "default.clock.rate" = 48000;
 
-        # Larger buffer = more resistant to system load
         "default.clock.quantum" = 1024;
         "default.clock.min-quantum" = 512;
         "default.clock.max-quantum" = 2048;
@@ -76,7 +74,10 @@
   };
   
   nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.overlays = [
+    inputs.ytm-player.overlays.default
+  ];
+  
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     waybar
@@ -87,7 +88,7 @@
     fish
     unzip
     btop
-    concord
+    concord-tui
     rofi
     wget
     mpv
@@ -103,6 +104,7 @@
     kdePackages.qtvirtualkeyboard
     kdePackages.qtimageformats
     cava
+    ytm-player
     awww
     hyprlandPlugins.borders-plus-plus
     zoom-us

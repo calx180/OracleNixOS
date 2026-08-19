@@ -11,6 +11,9 @@
 			url = "github:uiriansan/SilentSDDM";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		  ytm-player = {
+    url = "github:peternaame-boop/ytm-player";
+    };
 	};
 
 	outputs = { self, nixpkgs, home-manager, ... }@inputs: {
