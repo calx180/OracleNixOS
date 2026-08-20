@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
       inputs.silentSDDM.nixosModules.default
     ];
@@ -67,7 +67,7 @@
 
   users.users.calx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ];
     packages = with pkgs; [
       tree
     ];
@@ -79,7 +79,6 @@
   ];
   
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     waybar
     kitty
     foot
@@ -145,7 +144,6 @@
     priority = 100;
   };
 
-  # Force kernel to use fast zRAM early instead of waiting for 99% RAM usage
   boot.kernel.sysctl = {
     "vm.swappiness" = 180;
     "vm.watermark_boost_factor" = 0;
@@ -160,7 +158,7 @@
     HYPRCURSOR_SIZE = "24";
   };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.05";
 
 }
 
