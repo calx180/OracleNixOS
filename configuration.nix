@@ -104,6 +104,7 @@
     kdePackages.qtvirtualkeyboard
     kdePackages.qtimageformats
     cava
+    waypaper
     ytm-player
     awww
     hyprlandPlugins.borders-plus-plus
