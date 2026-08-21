@@ -92,7 +92,8 @@
     wget
     mpv
     yazi
-    libreoffice
+    brightnessctl
+    onlyoffice-desktopeditors
     fastfetch
     vscode
     lavat

@@ -13,7 +13,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("awww-daemon &")
     hl.exec_cmd("hyprctl plugin load /run/current-system/sw/lib/libborders-plus-plus.so")
     hl.exec_cmd("dbus-update-activation-environment --systemd XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE")
-    hl.exec_cmd("hyprctl setcursor ArcDusk-cursors 24")
+    hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 20")
 end)
 hl.config({
     general = {
@@ -24,7 +24,7 @@ hl.config({
 
         col = {
             active_border = {
-                colors = { "#b194ce", "#d331b2" },
+                colors = { "#b194ce", "#ff00ea" },
                 angle = 90,
         },
             inactive_border = "#902bbe",
