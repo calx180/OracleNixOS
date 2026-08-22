@@ -82,7 +82,6 @@
     waybar
     kitty
     foot
-    brave
     thunar
     fish
     unzip
@@ -116,11 +115,13 @@
     cmatrix
     starship
     hyprshot
+    brave-origin
   ];
   
   fonts.packages = with pkgs; [
     nerd-fonts.go-mono
     nerd-fonts.jetbrains-mono
+    maple-mono.NF-unhinted
   ]; 
  
   fonts.fontconfig = {

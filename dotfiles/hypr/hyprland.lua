@@ -7,13 +7,14 @@ hl.monitor({
 local terminal    = "foot"
 local fileManager = "thunar"
 local menu        = "rofi -show drun"
+local browser     = "brave-origin"
 
 hl.on("hyprland.start", function ()
     hl.exec_cmd("waybar")
     hl.exec_cmd("awww-daemon &")
     hl.exec_cmd("hyprctl plugin load /run/current-system/sw/lib/libborders-plus-plus.so")
     hl.exec_cmd("dbus-update-activation-environment --systemd XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE")
-    hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 20")
+    hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 19")
 end)
 hl.config({
     general = {
@@ -140,6 +141,7 @@ hl.device({
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(browser))
 local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
