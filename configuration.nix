@@ -94,6 +94,7 @@
     brightnessctl
     onlyoffice-desktopeditors
     fastfetch
+    fetch
     vscode
     lavat
     git
