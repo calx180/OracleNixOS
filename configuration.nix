@@ -98,6 +98,7 @@
     vscode
     lavat
     git
+    hyprpicker
     nwg-look
     kdePackages.qtmultimedia
     kdePackages.qtsvg
@@ -122,7 +123,8 @@
   fonts.packages = with pkgs; [
     nerd-fonts.go-mono
     nerd-fonts.jetbrains-mono
-    maple-mono.NF-unhinted
+    nerd-fonts.fira-code
+    nerd-fonts.geist-mono
   ]; 
  
   fonts.fontconfig = {
