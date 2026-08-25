@@ -125,6 +125,7 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.geist-mono
+    nerd-fonts.iosevka
   ]; 
  
   fonts.fontconfig = {
