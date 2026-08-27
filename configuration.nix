@@ -77,7 +77,7 @@
   nixpkgs.overlays = [
     inputs.ytm-player.overlays.default
   ];
-  
+
   environment.systemPackages = with pkgs; [
     waybar
     kitty
@@ -118,6 +118,8 @@
     starship
     hyprshot
     brave-origin
+    siyuan
+    libinput
   ];
   
   fonts.packages = with pkgs; [

@@ -124,7 +124,8 @@ hl.config({
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
-            natural_scroll = false,
+            natural_scroll = true,
+            scroll_factor = 0.2,
         },
     },
 })
@@ -132,8 +133,9 @@ hl.config({
 hl.gesture({
     fingers = 3,
     direction = "horizontal",
-    action = "workspace"
+    action = "workspace",
 })
+
 hl.device({
     name        = "epic-mouse-v1",
     sensitivity = -0.5,
