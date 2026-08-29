@@ -7,6 +7,8 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+		
 		silentSDDM = {
 			url = "github:uiriansan/SilentSDDM";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +18,7 @@
     };
 	};
 
-	outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }@inputs: {
 		nixosConfigurations.Oracle = nixpkgs.lib.nixosSystem {
 			specialArgs = { inherit inputs; };
 			modules = [
@@ -26,6 +28,11 @@
 					home-manager = {
 						useGlobalPkgs = true;
 						useUserPackages = true;
+
+						extraSpecialArgs = {
+              inherit inputs;
+            };
+						
 						users.calx = import ./home.nix;
 						backupFileExtension = "backup";
 					};
