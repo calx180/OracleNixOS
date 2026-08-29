@@ -8,6 +8,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
+		helium = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 		
 		silentSDDM = {
 			url = "github:uiriansan/SilentSDDM";
@@ -18,7 +23,7 @@
     };
 	};
 
-	outputs = { self, nixpkgs, home-manager, spicetify-nix, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, spicetify-nix, helium, ... }@inputs: {
 		nixosConfigurations.Oracle = nixpkgs.lib.nixosSystem {
 			specialArgs = { inherit inputs; };
 			modules = [

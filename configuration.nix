@@ -120,6 +120,8 @@
     brave-origin
     siyuan
     libinput
+    playerctl
+    inputs.helium.packages.${pkgs.system}.default
   ];
   
   fonts.packages = with pkgs; [
