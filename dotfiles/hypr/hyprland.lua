@@ -19,16 +19,16 @@ end)
 hl.config({
     general = {
         gaps_in  = 3,
-        gaps_out = 6,
+        gaps_out = 0,
 
         border_size = 1,
 
         col = {
             active_border = {
-                colors = { "#b194ce", "#ff00ea" },
+            colors = { "#b194ce", "#f5a4bb" },
                 angle = 90,
         },
-            inactive_border = "#902bbe",
+            inactive_border = "#9c7a97",
         },
         resize_on_border = false,
         allow_tearing = false,
