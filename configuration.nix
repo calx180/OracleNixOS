@@ -130,6 +130,7 @@
     nerd-fonts.fira-code
     nerd-fonts.geist-mono
     nerd-fonts.iosevka
+    geist-font
   ]; 
  
   fonts.fontconfig = {
