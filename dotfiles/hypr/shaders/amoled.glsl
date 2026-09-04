@@ -4,9 +4,9 @@ in vec2 v_texcoord;
 layout(location = 0) out vec4 fragColor;
 
 uniform sampler2D tex;
-const float BRIGHTNESS  = 1.1;   // 1.0 = off. Multiplicative exposure.
+const float BRIGHTNESS  = 1.015;   // 1.0 = off. Multiplicative exposure.
 const float BLACK_POINT = 0.04; // 0.0 = off. Levels-style black point -- pulls near-black
-const float CONTRAST    = 1.0;  // 1.0 = off. Punch around mid-grey. 1.05-1.15 is a good AMOLED range.
+const float CONTRAST    = 1.05;  // 1.0 = off. Punch around mid-grey. 1.05-1.15 is a good AMOLED range.
 const float SATURATION  = 1.0;   // 1.0 = off. 1.15-1.3 gives a vibrant, "vivid mode" look.
 const vec3 LUMA = vec3(0.2126, 0.7152, 0.0722);
 float ditherNoise(vec2 fragCoord) {

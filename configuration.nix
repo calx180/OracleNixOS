@@ -122,6 +122,8 @@
     libinput
     playerctl
     inputs.helium.packages.${pkgs.system}.default
+    obs-studio
+    xournalpp
   ];
   
   fonts.packages = with pkgs; [
