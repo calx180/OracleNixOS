@@ -42,8 +42,24 @@
     {
       enable = true;
 
-      theme = spicePkgs.themes.text;
-      colorScheme = "CatppuccinMocha";
+      customColorScheme = {
+        text               = "f0e8f5"; # Platinum white
+        subtext            = "c8becf"; # Pale silver
+        sidebar-text       = "f0e8f5";
+        main               = "120e17"; # Midnight dark obsidian background
+        sidebar            = "120e17";
+        player             = "1c1724"; # Dark slate player bar
+        card               = "1c1724";
+        shadow             = "0a080d";
+        selected-row       = "4a1824"; # Blood-wine row hover / selection
+        button             = "ff1744"; # Vivid Crimson play buttons
+        button-active      = "ff4d5a"; # Scarlet active state
+        button-disabled    = "534a5d";
+        tab-active         = "ff1744";
+        notification       = "ff1744";
+        notification-error = "ff1744";
+        misc               = "ff1744";
+      };
 
       enabledExtensions = with spicePkgs.extensions; [
         adblockify

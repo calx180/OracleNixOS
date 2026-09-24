@@ -1,6 +1,6 @@
 hl.monitor({
     output   = "",
-    mode     = "preferred",
+    mode     = "1600x900@60",
     position = "auto",
     scale    = "1",
 })
@@ -14,21 +14,28 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("awww-daemon &")
     hl.exec_cmd("hyprctl plugin load /run/current-system/sw/lib/libborders-plus-plus.so")
     hl.exec_cmd("dbus-update-activation-environment --systemd XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE")
-    hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 19")
+    hl.exec_cmd("hyprctl setcursor Arlecchino 24")
+
+    -- Infinite Desktop v2
+    hl.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/infinite_desktop_core.py 1.6 " ..
+        "> /tmp/infinite-desktop.log 2>&1 &"
+    )
 end)
 hl.config({
     general = {
         gaps_in  = 3,
-        gaps_out = 0,
+        gaps_out = 6,
 
         border_size = 1,
 
         col = {
             active_border = {
-            colors = { "#b194ce", "#f5a4bb" },
+            colors = { "#f0e8f5", "#ff1744" },
                 angle = 90,
         },
-            inactive_border = "#9c7a97",
+            inactive_border = "#58485c",
         },
         resize_on_border = false,
         allow_tearing = false,
@@ -46,15 +53,15 @@ hl.config({
 
         shadow = {
             enabled      = true,
-            range        = 1,
-            render_power = 1,
+            range        = 8,
+            render_power = 2,
             color        = 0xee1a1a1a,
         },
 
         blur = {
             enabled   = true,
-            size      = 3,
-            passes    = 1,
+            size      = 4,
+            passes    = 2,
             vibrancy  = 0.1696,
         },
     },
@@ -68,13 +75,22 @@ hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1}
 hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}       } })
 hl.curve("almostLinear",   { type = "bezier", points = { {0.5, 0.5},   {0.75, 1}    } })
 hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1}     } })
-hl.curve("easy",           { type = "spring", mass = 1, stiffness = 238.1191, dampening = 24.21279333 })
+hl.curve("easy",           { type = "spring", mass = 1, stiffness = 220.1191, dampening = 24.21279333 })
 hl.curve("elegantSwing", { type = "bezier", points = { { 0.275, 0.685 }, { 0.22, 1.008 } } })
+
+
+-- Lockscreen
+hl.bind("SUPER + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/lock.sh"))
+
+-- macOS-style spring slide when hyprlock closes on unlock
+hl.curve("lockSpring", { type = "spring", mass = 1, stiffness = 140, dampening = 22 })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 4, spring = "lockSpring", style = "slide" })
+hl.animation({ leaf = "layersIn",  enabled = true, speed = 3, spring = "lockSpring", style = "fade" })
 
 hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
 hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
 hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "slide" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 9,  spring = "easy",         style = "popin" })
 hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "gnomed" })
 hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
 hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
@@ -108,6 +124,12 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+    },
+})
+
+hl.config({
+    cursor = {
+        no_warps = true,
     },
 })
 
@@ -151,10 +173,149 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
-hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+-- Infinite Desktop v2 navigation
+hl.bind(mainMod .. " + left",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/navigate_windows.py left"
+    )
+)
+
+hl.bind(mainMod .. " + right",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/navigate_windows.py right"
+    )
+)
+
+hl.bind(mainMod .. " + up",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/navigate_windows.py up"
+    )
+)
+
+hl.bind(mainMod .. " + down",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/navigate_windows.py down"
+    )
+)
+
+-- Infinite Desktop v2: move tiled windows
+hl.bind(mainMod .. " + ALT + left",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window_tiled.py left"
+    )
+)
+
+hl.bind(mainMod .. " + ALT + right",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window_tiled.py right"
+    )
+)
+
+hl.bind(mainMod .. " + ALT + up",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window_tiled.py up"
+    )
+)
+
+hl.bind(mainMod .. " + ALT + down",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window_tiled.py down"
+    )
+)
+
+-- Infinite Desktop v2: move floating windows
+hl.bind(mainMod .. " + SHIFT + left",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window.py left"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + SHIFT + right",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window.py right"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + SHIFT + up",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window.py up"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + SHIFT + down",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/move_window.py down"
+    ),
+    { repeating = true }
+)
+
+-- Infinite Desktop v2: resize
+hl.bind(mainMod .. " + CTRL + left",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/resize_window.py left"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + CTRL + right",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/resize_window.py right"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + CTRL + up",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/resize_window.py up"
+    ),
+    { repeating = true }
+)
+
+hl.bind(mainMod .. " + CTRL + down",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/resize_window.py down"
+    ),
+    { repeating = true }
+)
+
+-- Infinite Desktop v2: toggle all windows
+hl.bind(mainMod .. " + D",
+    hl.dsp.exec_cmd(
+        "/run/current-system/sw/bin/infinite-desktop-python " ..
+        "$HOME/.config/hypr/infinite-desktop/floating_tile_toggle.py"
+    )
+)
+
+-- Infinite Desktop: window cycling
+hl.bind(
+    mainMod .. " + Tab",
+    hl.dsp.exec_cmd("infinite-desktop-python ~/.config/hypr/infinite-desktop/cycle_windows.py")
+)
+
+hl.bind(
+    mainMod .. " + SHIFT + Tab",
+    hl.dsp.exec_cmd("infinite-desktop-python ~/.config/hypr/infinite-desktop/cycle_windows.py prev")
+)
+
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
     hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
@@ -178,6 +339,8 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 
+-- Lockscreen
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/lock.sh"))
 
 hl.bind(
 	mainMod .. " + CTRL + S",
@@ -226,20 +389,23 @@ hl.layer_rule({
 hl.layer_rule({
 	match = { namespace = "rofi -show drun" },
 	blur = true,
-	ignore_alpha = 0.1,
+	animation = slide,
+	ignore_alpha = 0.5,
 })
+
+
 
 hl.plugin.load("/run/current-system/sw/lib/libborders-plus-plus.so")
 hl.config({
 	plugin = {
 		borders_plus_plus = {
 			add_borders = 3,
-			natural_rounding = false,
-			col = {
-				border_1 = "#290d42",
-				border_2 = "#290d42",
-                border_3 = "#290d42"
-			},
+			natural_rounding = true,
+      col = {
+        border_1 = "#25212b", -- Dark slate gray (inner)
+        border_2 = "#18151c", -- Deep neutral slate (middle)
+        border_3 = "#0a090d", -- Pitch black edge (outer)
+      },
 			border_size_1 = 1,
 			border_size_2 = 1,
             border_size_3 = 1,

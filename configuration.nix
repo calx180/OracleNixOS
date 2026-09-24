@@ -18,10 +18,14 @@
   networking.hostName = "Oracle";
 
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 53317 ];
+  networking.firewall.allowedUDPPorts = [ 53317 ];
 
   time.timeZone = "Asia/Manila";
 
   security.rtkit.enable = true;
+
+  hardware.enableAllFirmware = true;
 
   services.pipewire = {
     enable = true;
@@ -41,9 +45,32 @@
     };
   };
 
+  services.flatpak.enable = true;
+
   programs.silentSDDM = {
     enable = true;
-    theme = "catppuccin-mocha";
+    theme = "default";
+
+    backgrounds = {
+      myBackground = ./assets/flower.png;
+    };
+
+    profileIcons = {
+      calx = ./assets/_.jpeg;
+    };
+
+    settings = {
+      "LoginScreen" = {
+        use-background-color = false;
+        background = "flower.png";
+        blur = 6;
+      };
+
+      "Lockscreen" = {
+        use-background-color = false;
+        background = "flower.png";
+      };
+    };
   };
 
   programs.hyprland = {
@@ -58,6 +85,15 @@
 
   services.libinput.enable = true;
 
+  services.mysql = {
+    enable = true;
+    package = pkgs.mysql84;
+  };
+
+  services.gnome.gnome-keyring.enable = true;
+
+  security.pam.services.login.enableGnomeKeyring = true;
+  
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -67,7 +103,7 @@
 
   users.users.calx = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "input" ];
     packages = with pkgs; [
       tree
     ];
@@ -78,7 +114,8 @@
     inputs.ytm-player.overlays.default
   ];
 
-  environment.systemPackages = with pkgs; [
+
+ environment.systemPackages = with pkgs; [
     waybar
     kitty
     foot
@@ -124,6 +161,23 @@
     inputs.helium.packages.${pkgs.system}.default
     obs-studio
     xournalpp
+    mysql-workbench
+    hyprlock
+    grim
+    python3
+    python3Packages.evdev
+    jq
+    bash
+    win2xcur
+    localsend
+     # Infinite Desktop v2
+      (writeShellScriptBin "infinite-desktop-python" ''
+        exec ${
+          python3.withPackages (ps: [
+            ps.evdev
+          ])
+        }/bin/python3 "$@"
+      '')
   ];
   
   fonts.packages = with pkgs; [
@@ -153,7 +207,7 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 100;
+    memoryPercent = 300;
     priority = 100;
   };
 
@@ -164,12 +218,6 @@
     "vm.page-cluster" = 0;
   };
 
-  environment.sessionVariables = {
-    XCURSOR_THEME = "ArcDusk-cursors";
-    XCURSOR_SIZE = "24";
-    HYPRCURSOR_THEME = "ArcDusk-cursors";
-    HYPRCURSOR_SIZE = "24";
-  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "26.05";
 
